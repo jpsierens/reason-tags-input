@@ -10,7 +10,31 @@ type person = {
 
 let me = {name: "JP", age: 29, sex: "male"};
 
-Js.log(me);
+let isMorning = false;
+
+Js.log(isMorning ? "Good morning!" : "Hello!");
+
+let letsDestructure = (~person as {name}) => Js.log(name);
+
+letsDestructure(~person=me);
+
+/* Pattern matching  */
+type payload =
+  | BadResult(int)
+  | GoodResult(string)
+  | NoResult;
+
+let data = GoodResult("Product shipped!");
+
+let message =
+  switch data {
+  | GoodResult(theMessage) => "Success! " ++ theMessage
+  | BadResult(errorCode) =>
+    "Something's wrong. The error code is: " ++ string_of_int(errorCode)
+  | NoResult => "Nothing"
+  };
+
+Js.log(message);
 
 let make = (~message, _children) => {
   ...component,
