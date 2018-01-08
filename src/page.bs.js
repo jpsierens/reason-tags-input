@@ -12,6 +12,14 @@ function handleClick(_, _$1) {
   return /* () */0;
 }
 
+var me = /* record */[
+  /* name */"JP",
+  /* age */29,
+  /* sex */"male"
+];
+
+console.log(me);
+
 function make(message, _) {
   var newrecord = component.slice();
   newrecord[/* render */9] = (function (self) {
@@ -24,5 +32,6 @@ function make(message, _) {
 
 exports.component   = component;
 exports.handleClick = handleClick;
+exports.me          = me;
 exports.make        = make;
 /* component Not a pure module */
