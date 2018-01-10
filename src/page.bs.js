@@ -4,59 +4,32 @@
 var Block       = require("bs-platform/lib/js/block.js");
 var Curry       = require("bs-platform/lib/js/curry.js");
 var React       = require("react");
-var Pervasives  = require("bs-platform/lib/js/pervasives.js");
 var ReasonReact = require("reason-react/src/ReasonReact.js");
 
-var component = ReasonReact.statelessComponent("Page");
+var component = ReasonReact.reducerComponent("Page");
 
-function handleClick(_, _$1) {
-  console.log("clicked!");
-  return /* () */0;
+function change($$event) {
+  return /* Change */[$$event.target.value];
 }
 
-var me = /* record */[
-  /* name */"JP",
-  /* age */29,
-  /* sex */"male"
-];
-
-console.log("Hello!");
-
-function letsDestructure(param) {
-  console.log(param[/* name */0]);
-  return /* () */0;
-}
-
-letsDestructure(me);
-
-var data = /* GoodResult */Block.__(1, ["Product shipped!"]);
-
-var message;
-
-message = typeof data === "number" ? "Nothing" : (
-    data.tag ? "Success! Product shipped!" : "Something's wrong. The error code is: " + Pervasives.string_of_int("Product shipped!")
-  );
-
-console.log(message);
-
-function make(message, _) {
+function make(_, _$1) {
   var newrecord = component.slice();
   newrecord[/* render */9] = (function (self) {
-      return React.createElement("section", {
-                  onClick: Curry._1(self[/* handle */0], handleClick)
-                }, message);
+      return React.createElement("section", undefined, self[/* state */2], React.createElement("div", undefined, React.createElement("input", {
+                          type: "text",
+                          onChange: Curry._1(self[/* reduce */1], change)
+                        })));
+    });
+  newrecord[/* initialState */10] = (function () {
+      return "";
+    });
+  newrecord[/* reducer */12] = (function (action, _) {
+      return /* Update */Block.__(0, [action[0]]);
     });
   return newrecord;
 }
 
-var isMorning = /* false */0;
-
-exports.component       = component;
-exports.handleClick     = handleClick;
-exports.me              = me;
-exports.isMorning       = isMorning;
-exports.letsDestructure = letsDestructure;
-exports.data            = data;
-exports.message         = message;
-exports.make            = make;
+exports.component = component;
+exports.change    = change;
+exports.make      = make;
 /* component Not a pure module */

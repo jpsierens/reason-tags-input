@@ -1,45 +1,24 @@
-let component = ReasonReact.statelessComponent("Page");
+type action =
+  | Change(string);
 
-let handleClick = (_event, _self) => Js.log("clicked!");
+let component = ReasonReact.reducerComponent("Page");
 
-type person = {
-  name: string,
-  age: int,
-  sex: string
-};
+let change = event =>
+  Change(ReactDOMRe.domElementToObj(ReactEventRe.Form.target(event))##value);
 
-let me = {name: "JP", age: 29, sex: "male"};
-
-let isMorning = false;
-
-Js.log(isMorning ? "Good morning!" : "Hello!");
-
-let letsDestructure = (~person as {name}) => Js.log(name);
-
-letsDestructure(~person=me);
-
-/* Pattern matching  */
-type payload =
-  | BadResult(int)
-  | GoodResult(string)
-  | NoResult;
-
-let data = GoodResult("Product shipped!");
-
-let message =
-  switch data {
-  | GoodResult(theMessage) => "Success! " ++ theMessage
-  | BadResult(errorCode) =>
-    "Something's wrong. The error code is: " ++ string_of_int(errorCode)
-  | NoResult => "Nothing"
-  };
-
-Js.log(message);
-
+/* make is just a function that returns an object, which overrides the
+   default component with whatever you pass after ...component  */
 let make = (~message, _children) => {
   ...component,
+  initialState: () => "",
+  /* pattern matching on the possible actions  */
+  reducer: (action, state) =>
+    switch action {
+    | Change(text) => ReasonReact.Update(text)
+    },
   render: self =>
-    <section onClick=(self.handle(handleClick))>
-      (ReasonReact.stringToElement(message))
+    <section>
+      (ReasonReact.stringToElement(self.state))
+      <div> <input _type="text" onChange=(self.reduce(change)) /> </div>
     </section>
 };
