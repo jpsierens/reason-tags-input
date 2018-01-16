@@ -1147,34 +1147,6 @@ module.exports = ReactComponentTreeHook;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(process) {/**
- * Copyright (c) 2016-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- * 
- */
-
-
-
-// Trust the developer to only use ReactInstrumentation with a __DEV__ check
-
-var debugTool = null;
-
-if (process.env.NODE_ENV !== 'production') {
-  var ReactDebugTool = __webpack_require__(103);
-  debugTool = ReactDebugTool;
-}
-
-module.exports = { debugTool: debugTool };
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
-
-/***/ }),
-/* 9 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
 
 
 
@@ -1276,6 +1248,34 @@ exports.assert_failure             = assert_failure;
 exports.undefined_recursive_module = undefined_recursive_module;
 /*  Not a pure module */
 
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {/**
+ * Copyright (c) 2016-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * 
+ */
+
+
+
+// Trust the developer to only use ReactInstrumentation with a __DEV__ check
+
+var debugTool = null;
+
+if (process.env.NODE_ENV !== 'production') {
+  var ReactDebugTool = __webpack_require__(103);
+  debugTool = ReactDebugTool;
+}
+
+module.exports = { debugTool: debugTool };
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
 /* 10 */
@@ -2571,7 +2571,7 @@ module.exports = ReactElement;
 
 
 var ReactRef = __webpack_require__(101);
-var ReactInstrumentation = __webpack_require__(8);
+var ReactInstrumentation = __webpack_require__(9);
 
 var warning = __webpack_require__(2);
 
@@ -5841,7 +5841,7 @@ module.exports = getEventModifierState;
 var DOMLazyTree = __webpack_require__(19);
 var Danger = __webpack_require__(112);
 var ReactDOMComponentTree = __webpack_require__(5);
-var ReactInstrumentation = __webpack_require__(8);
+var ReactInstrumentation = __webpack_require__(9);
 
 var createMicrosoftUnsafeLocalFunction = __webpack_require__(41);
 var setInnerHTML = __webpack_require__(29);
@@ -6567,7 +6567,7 @@ var _prodInvariant = __webpack_require__(3);
 
 var ReactCurrentOwner = __webpack_require__(12);
 var ReactInstanceMap = __webpack_require__(25);
-var ReactInstrumentation = __webpack_require__(8);
+var ReactInstrumentation = __webpack_require__(9);
 var ReactUpdates = __webpack_require__(11);
 
 var invariant = __webpack_require__(1);
@@ -7222,7 +7222,7 @@ module.exports = getEventCharCode;
 
 
 var Block                   = __webpack_require__(52);
-var Caml_builtin_exceptions = __webpack_require__(9);
+var Caml_builtin_exceptions = __webpack_require__(8);
 
 function caml_obj_dup(x) {
   var len = x.length | 0;
@@ -8326,7 +8326,7 @@ module.exports = CSSProperty;
 
 var DOMProperty = __webpack_require__(14);
 var ReactDOMComponentTree = __webpack_require__(5);
-var ReactInstrumentation = __webpack_require__(8);
+var ReactInstrumentation = __webpack_require__(9);
 
 var quoteAttributeValueForBrowser = __webpack_require__(126);
 var warning = __webpack_require__(2);
@@ -10127,7 +10127,7 @@ var ReactDOMContainerInfo = __webpack_require__(183);
 var ReactDOMFeatureFlags = __webpack_require__(184);
 var ReactFeatureFlags = __webpack_require__(59);
 var ReactInstanceMap = __webpack_require__(25);
-var ReactInstrumentation = __webpack_require__(8);
+var ReactInstrumentation = __webpack_require__(9);
 var ReactMarkupChecksum = __webpack_require__(185);
 var ReactReconciler = __webpack_require__(17);
 var ReactUpdateQueue = __webpack_require__(48);
@@ -10682,7 +10682,7 @@ module.exports = getHostComponentFromComposite;
 "use strict";
 
 
-var Caml_builtin_exceptions = __webpack_require__(9);
+var Caml_builtin_exceptions = __webpack_require__(8);
 
 function caml_array_sub(x, offset, len) {
   var result = new Array(len);
@@ -10806,7 +10806,7 @@ exports.caml_array_set    = caml_array_set;
 var List                            = __webpack_require__(193);
 var Curry                           = __webpack_require__(21);
 var React                           = __webpack_require__(53);
-var Caml_builtin_exceptions         = __webpack_require__(9);
+var Caml_builtin_exceptions         = __webpack_require__(8);
 var ReasonReactOptimizedCreateClass = __webpack_require__(203);
 
 function createDomElement(s, props, children) {
@@ -11324,7 +11324,7 @@ exports.wrapJsForReason                     = wrapJsForReason;
 "use strict";
 
 
-var Caml_builtin_exceptions = __webpack_require__(9);
+var Caml_builtin_exceptions = __webpack_require__(8);
 
 function div(x, y) {
   if (y === 0) {
@@ -11430,7 +11430,7 @@ ReactDOMRe.renderToElementWithId(ReasonReact.element(/* None */0, /* None */0, P
 
 var ReactDom                = __webpack_require__(92);
 var Caml_array              = __webpack_require__(86);
-var Caml_builtin_exceptions = __webpack_require__(9);
+var Caml_builtin_exceptions = __webpack_require__(8);
 
 function renderToElementWithClassName(reactElement, className) {
   var elements = document.getElementsByClassName(className);
@@ -11591,7 +11591,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 if (process.env.NODE_ENV !== 'production') {
-  var ReactInstrumentation = __webpack_require__(8);
+  var ReactInstrumentation = __webpack_require__(9);
   var ReactDOMUnknownPropertyHook = __webpack_require__(190);
   var ReactDOMNullInputValuePropHook = __webpack_require__(191);
   var ReactDOMInvalidARIAHook = __webpack_require__(192);
@@ -14184,7 +14184,7 @@ var ReactDOMInput = __webpack_require__(129);
 var ReactDOMOption = __webpack_require__(145);
 var ReactDOMSelect = __webpack_require__(75);
 var ReactDOMTextarea = __webpack_require__(146);
-var ReactInstrumentation = __webpack_require__(8);
+var ReactInstrumentation = __webpack_require__(9);
 var ReactMultiChild = __webpack_require__(147);
 var ReactServerRenderingTransaction = __webpack_require__(156);
 
@@ -15211,7 +15211,7 @@ module.exports = AutoFocusUtils;
 
 var CSSProperty = __webpack_require__(65);
 var ExecutionEnvironment = __webpack_require__(6);
-var ReactInstrumentation = __webpack_require__(8);
+var ReactInstrumentation = __webpack_require__(9);
 
 var camelizeStyleName = __webpack_require__(120);
 var dangerousStyleValue = __webpack_require__(122);
@@ -18920,7 +18920,7 @@ var _prodInvariant = __webpack_require__(3);
 
 var ReactComponentEnvironment = __webpack_require__(44);
 var ReactInstanceMap = __webpack_require__(25);
-var ReactInstrumentation = __webpack_require__(8);
+var ReactInstrumentation = __webpack_require__(9);
 
 var ReactCurrentOwner = __webpack_require__(12);
 var ReactReconciler = __webpack_require__(17);
@@ -19531,7 +19531,7 @@ var ReactComponentEnvironment = __webpack_require__(44);
 var ReactCurrentOwner = __webpack_require__(12);
 var ReactErrorUtils = __webpack_require__(35);
 var ReactInstanceMap = __webpack_require__(25);
-var ReactInstrumentation = __webpack_require__(8);
+var ReactInstrumentation = __webpack_require__(9);
 var ReactNodeTypes = __webpack_require__(77);
 var ReactReconciler = __webpack_require__(17);
 
@@ -20722,7 +20722,7 @@ var _assign = __webpack_require__(4);
 
 var PooledClass = __webpack_require__(15);
 var Transaction = __webpack_require__(27);
-var ReactInstrumentation = __webpack_require__(8);
+var ReactInstrumentation = __webpack_require__(9);
 var ReactServerUpdateQueue = __webpack_require__(157);
 
 /**
@@ -21638,7 +21638,7 @@ var CallbackQueue = __webpack_require__(58);
 var PooledClass = __webpack_require__(15);
 var ReactBrowserEventEmitter = __webpack_require__(31);
 var ReactInputSelection = __webpack_require__(82);
-var ReactInstrumentation = __webpack_require__(8);
+var ReactInstrumentation = __webpack_require__(9);
 var Transaction = __webpack_require__(27);
 var ReactUpdateQueue = __webpack_require__(48);
 
@@ -23952,7 +23952,7 @@ module.exports = ReactDOMInvalidARIAHook;
 var Curry                   = __webpack_require__(21);
 var Caml_obj                = __webpack_require__(51);
 var Pervasives              = __webpack_require__(194);
-var Caml_builtin_exceptions = __webpack_require__(9);
+var Caml_builtin_exceptions = __webpack_require__(8);
 
 function length(l) {
   var _len = 0;
@@ -25655,7 +25655,7 @@ var Caml_format              = __webpack_require__(197);
 var Caml_string              = __webpack_require__(199);
 var Caml_exceptions          = __webpack_require__(200);
 var Caml_missing_polyfill    = __webpack_require__(201);
-var Caml_builtin_exceptions  = __webpack_require__(9);
+var Caml_builtin_exceptions  = __webpack_require__(8);
 var CamlinternalFormatBasics = __webpack_require__(202);
 
 function failwith(s) {
@@ -26349,7 +26349,7 @@ exports.do_at_exit          = do_at_exit;
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var Curry                   = __webpack_require__(21);
-var Caml_builtin_exceptions = __webpack_require__(9);
+var Caml_builtin_exceptions = __webpack_require__(8);
 
 function $caret(prim, prim$1) {
   return prim + prim$1;
@@ -26486,7 +26486,7 @@ exports.caml_ml_out_channels_list   = caml_ml_out_channels_list;
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {
 
-var Caml_builtin_exceptions = __webpack_require__(9);
+var Caml_builtin_exceptions = __webpack_require__(8);
 
 function caml_sys_getenv(s) {
   var match = typeof (process) === "undefined" ? undefined : (process);
@@ -26597,7 +26597,7 @@ var Curry                   = __webpack_require__(21);
 var Caml_int32              = __webpack_require__(88);
 var Caml_int64              = __webpack_require__(198);
 var Caml_utils              = __webpack_require__(89);
-var Caml_builtin_exceptions = __webpack_require__(9);
+var Caml_builtin_exceptions = __webpack_require__(8);
 
 function caml_failwith(s) {
   throw [
@@ -27404,7 +27404,7 @@ exports.caml_nativeint_of_string = caml_nativeint_of_string;
 var Caml_obj                = __webpack_require__(51);
 var Caml_int32              = __webpack_require__(88);
 var Caml_utils              = __webpack_require__(89);
-var Caml_builtin_exceptions = __webpack_require__(9);
+var Caml_builtin_exceptions = __webpack_require__(8);
 
 var min_int = /* record */[
   /* hi */-2147483648,
@@ -28008,7 +28008,7 @@ exports.get64         = get64;
 "use strict";
 
 
-var Caml_builtin_exceptions = __webpack_require__(9);
+var Caml_builtin_exceptions = __webpack_require__(8);
 
 function string_of_char(prim) {
   return String.fromCharCode(prim);
@@ -29424,58 +29424,50 @@ exports.createClass          = createClass;
 // Generated by BUCKLESCRIPT VERSION 2.1.0, PLEASE EDIT WITH CARE
 
 
-var Block                   = __webpack_require__(52);
 var Curry                   = __webpack_require__(21);
 var React                   = __webpack_require__(53);
 var ReasonReact             = __webpack_require__(87);
-var Caml_builtin_exceptions = __webpack_require__(9);
+var Caml_builtin_exceptions = __webpack_require__(8);
 
 var component = ReasonReact.reducerComponent("Page");
 
-function change($$event) {
-  return /* Change */Block.__(0, [$$event.target.value]);
-}
-
 function keypress($$event) {
-  return /* KeyPress */Block.__(1, [$$event.which]);
+  return /* KeyPress */[$$event.which];
 }
 
-function make(_, _$1) {
+function make() {
   var newrecord = component.slice();
   newrecord[/* render */9] = (function (self) {
       return React.createElement("section", undefined, self[/* state */2], React.createElement("div", undefined, React.createElement("input", {
                           type: "text",
-                          onKeyPress: Curry._1(self[/* reduce */1], keypress),
-                          onChange: Curry._1(self[/* reduce */1], change)
+                          onKeyPress: Curry._1(self[/* reduce */1], keypress)
                         })));
     });
   newrecord[/* initialState */10] = (function () {
-      return "";
+      return /* record */[/* tags : :: */[
+                "",
+                /* [] */0
+              ]];
     });
   newrecord[/* reducer */12] = (function (action, _) {
-      if (action.tag) {
-        if (action[0] !== 13) {
-          throw [
-                Caml_builtin_exceptions.match_failure,
-                [
-                  "/Users/jpsierens/Sites/personal/react-tags-input/src/page.re",
-                  25,
-                  6
-                ]
-              ];
-        } else {
-          console.log("pressed Enter!");
-          return /* NoUpdate */0;
-        }
+      if (action[0] !== 13) {
+        throw [
+              Caml_builtin_exceptions.match_failure,
+              [
+                "/Users/jpsierens/Sites/personal/react-tags-input/src/page.re",
+                20,
+                6
+              ]
+            ];
       } else {
-        return /* Update */Block.__(0, [action[0]]);
+        console.log("pressed Enter!");
+        return /* NoUpdate */0;
       }
     });
   return newrecord;
 }
 
 exports.component = component;
-exports.change    = change;
 exports.keypress  = keypress;
 exports.make      = make;
 /* component Not a pure module */
