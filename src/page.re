@@ -1,5 +1,6 @@
 type action =
   | Change(string)
+  | RemoveTagClick(string)
   | KeyPress(int);
 
 type state = {
@@ -14,10 +15,8 @@ let component = ReasonReact.reducerComponent("Page");
 /* This function helps as a step between the onChange handler and the actual reducer call.
    Its basically for putting ugly things like extracting input value, and letting the onChange handler
    and reducer clean */
-let change = event => {
-  Js.log(ReactDOMRe.domElementToObj(ReactEventRe.Form.target(event))##value);
+let change = event =>
   Change(ReactDOMRe.domElementToObj(ReactEventRe.Form.target(event))##value);
-};
 
 let keypress = event => KeyPress(ReactEventRe.Keyboard.which(event));
 
@@ -25,7 +24,7 @@ let keypress = event => KeyPress(ReactEventRe.Keyboard.which(event));
    default component with whatever you pass after ...component  */
 let make = _children => {
   ...component,
-  initialState: () => {tags: [""], currentInput: ""},
+  initialState: () => {tags: [], currentInput: ""},
   /* pattern matching on the possible actions  */
   reducer: (action, state) =>
     switch action {
@@ -36,24 +35,36 @@ let make = _children => {
         currentInput: ""
       })
     | KeyPress(_) => ReasonReact.NoUpdate
+    | RemoveTagClick(tag) =>
+      ReasonReact.Update({
+        ...state,
+        tags: List.filter(t => t !== tag, state.tags)
+      })
     },
-  render: self =>
+  render: ({reduce, state}) =>
     <section>
-      (str("Tags: "))
-      (
-        /* The pipe |> is a left-associative binary operator that's defined as a |> b == b(a). */
-        /* This is how you render a list of strings*/
-        List.map(tag => str(tag), self.state.tags)
-        |> Array.of_list
-        |> ReasonReact.arrayToElement
-      )
-      (str("Current Input: "))
-      (str(self.state.currentInput))
-      <div>
+      <div className="react-tags-input">
+        (
+          List.map(
+            tag =>
+              <span key=tag className="tag">
+                (str(tag))
+                <span
+                  className="remove-tag"
+                  onClick=(reduce((_) => RemoveTagClick(tag)))>
+                  (str("X"))
+                </span>
+              </span>,
+            state.tags
+          )
+          |> Array.of_list
+          |> ReasonReact.arrayToElement
+        )
         <input
           _type="text"
-          onKeyPress=(self.reduce(keypress))
-          onChange=(self.reduce(change))
+          value=state.currentInput
+          onKeyPress=(reduce(keypress))
+          onChange=(reduce(change))
         />
       </div>
     </section>

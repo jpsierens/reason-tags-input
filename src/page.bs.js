@@ -15,52 +15,71 @@ function str(prim) {
 var component = ReasonReact.reducerComponent("Page");
 
 function change($$event) {
-  console.log($$event.target.value);
   return /* Change */Block.__(0, [$$event.target.value]);
 }
 
 function keypress($$event) {
-  return /* KeyPress */Block.__(1, [$$event.which]);
+  return /* KeyPress */Block.__(2, [$$event.which]);
 }
 
 function make() {
   var newrecord = component.slice();
-  newrecord[/* render */9] = (function (self) {
-      return React.createElement("section", undefined, "Tags: ", $$Array.of_list(List.map((function (tag) {
-                            return tag;
-                          }), self[/* state */2][/* tags */0])), "Current Input: ", self[/* state */2][/* currentInput */1], React.createElement("div", undefined, React.createElement("input", {
+  newrecord[/* render */9] = (function (param) {
+      var state = param[/* state */2];
+      var reduce = param[/* reduce */1];
+      return React.createElement("section", undefined, React.createElement("div", {
+                      className: "react-tags-input"
+                    }, $$Array.of_list(List.map((function (tag) {
+                                return React.createElement("span", {
+                                            key: tag,
+                                            className: "tag"
+                                          }, tag, React.createElement("span", {
+                                                className: "remove-tag",
+                                                onClick: Curry._1(reduce, (function () {
+                                                        return /* RemoveTagClick */Block.__(1, [tag]);
+                                                      }))
+                                              }, "X"));
+                              }), state[/* tags */0])), React.createElement("input", {
                           type: "text",
-                          onKeyPress: Curry._1(self[/* reduce */1], keypress),
-                          onChange: Curry._1(self[/* reduce */1], change)
+                          value: state[/* currentInput */1],
+                          onKeyPress: Curry._1(reduce, keypress),
+                          onChange: Curry._1(reduce, change)
                         })));
     });
   newrecord[/* initialState */10] = (function () {
       return /* record */[
-              /* tags : :: */[
-                "",
-                /* [] */0
-              ],
+              /* tags : [] */0,
               /* currentInput */""
             ];
     });
   newrecord[/* reducer */12] = (function (action, state) {
-      if (action.tag) {
-        if (action[0] !== 13) {
-          return /* NoUpdate */0;
-        } else {
-          return /* Update */Block.__(0, [/* record */[
-                      /* tags */List.append(state[/* tags */0], /* :: */[
-                            state[/* currentInput */1],
-                            /* [] */0
-                          ]),
-                      /* currentInput */""
-                    ]]);
-        }
-      } else {
-        return /* Update */Block.__(0, [/* record */[
-                    /* tags */state[/* tags */0],
-                    /* currentInput */action[0]
-                  ]]);
+      switch (action.tag | 0) {
+        case 0 : 
+            return /* Update */Block.__(0, [/* record */[
+                        /* tags */state[/* tags */0],
+                        /* currentInput */action[0]
+                      ]]);
+        case 1 : 
+            var tag = action[0];
+            return /* Update */Block.__(0, [/* record */[
+                        /* tags */List.filter((function (t) {
+                                  return +(t !== tag);
+                                }))(state[/* tags */0]),
+                        /* currentInput */state[/* currentInput */1]
+                      ]]);
+        case 2 : 
+            if (action[0] !== 13) {
+              return /* NoUpdate */0;
+            } else {
+              return /* Update */Block.__(0, [/* record */[
+                          /* tags */List.append(state[/* tags */0], /* :: */[
+                                state[/* currentInput */1],
+                                /* [] */0
+                              ]),
+                          /* currentInput */""
+                        ]]);
+            }
+        
       }
     });
   return newrecord;
