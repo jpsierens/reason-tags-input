@@ -1,16 +1,23 @@
 type action =
   | Change(string)
   | RemoveTagClick(string)
+  | FocusClick
   | KeyPress(int);
 
 type state = {
   tags: list(string),
-  currentInput: string
+  currentInput: string,
+  inputRef: ref(option(Dom.element))
 };
 
 let str = ReasonReact.stringToElement;
 
 let component = ReasonReact.reducerComponent("Page");
+
+/* Check this link on refs to understand why we do This
+   https://reasonml.github.io/reason-react/docs/en/react-ref.html */
+let setInputRef = (r, {ReasonReact.state}) =>
+  state.inputRef := Js.Nullable.to_opt(r);
 
 /* This function helps as a step between the onChange handler and the actual reducer call.
    Its basically for putting ugly things like extracting input value, and letting the onChange handler
@@ -24,13 +31,14 @@ let keypress = event => KeyPress(ReactEventRe.Keyboard.which(event));
    default component with whatever you pass after ...component  */
 let make = _children => {
   ...component,
-  initialState: () => {tags: [], currentInput: ""},
+  initialState: () => {tags: [], currentInput: "", inputRef: ref(None)},
   /* pattern matching on the possible actions  */
   reducer: (action, state) =>
     switch action {
     | Change(text) => ReasonReact.Update({...state, currentInput: text})
     | KeyPress(13) =>
       ReasonReact.Update({
+        ...state,
         tags: List.append(state.tags, [state.currentInput]),
         currentInput: ""
       })
@@ -40,10 +48,16 @@ let make = _children => {
         ...state,
         tags: List.filter(t => t !== tag, state.tags)
       })
+    | FocusClick =>
+      switch state.inputRef^ {
+      | None => ReasonReact.NoUpdate
+      | Some(r) =>
+        ReasonReact.SideEffects(ReactDOMRe.domElementToObj(r)##focus())
+      }
     },
-  render: ({reduce, state}) =>
+  render: ({reduce, state, handle}) =>
     <section>
-      <div className="react-tags-input">
+      <div className="react-tags-input" onClick=(reduce((_) => FocusClick))>
         (
           List.map(
             tag =>
@@ -62,6 +76,7 @@ let make = _children => {
         )
         <input
           _type="text"
+          ref=(handle(setInputRef))
           value=state.currentInput
           onKeyPress=(reduce(keypress))
           onChange=(reduce(change))
