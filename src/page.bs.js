@@ -66,7 +66,8 @@ function make() {
       if (typeof action === "number") {
         var match = state[/* inputRef */2][0];
         if (match) {
-          return /* SideEffects */Block.__(2, [match[0].focus()]);
+          /* SideEffects */Block.__(2, [match[0].focus()]);
+          return /* NoUpdate */0;
         } else {
           return /* NoUpdate */0;
         }
@@ -91,15 +92,23 @@ function make() {
               if (action[0] !== 13) {
                 return /* NoUpdate */0;
               } else {
-                return /* Update */Block.__(0, [/* record */[
-                            /* tags */List.append(state[/* tags */0], /* :: */[
-                                  state[/* currentInput */1],
-                                  /* [] */0
-                                ]),
-                            /* currentInput */"",
-                            /* inputRef */state[/* inputRef */2]
-                          ]]);
+                var exists = List.exists((function (t) {
+                        return +(t === state[/* currentInput */1]);
+                      }), state[/* tags */0]);
+                if (exists) {
+                  return /* NoUpdate */0;
+                } else {
+                  return /* Update */Block.__(0, [/* record */[
+                              /* tags */List.append(state[/* tags */0], /* :: */[
+                                    state[/* currentInput */1],
+                                    /* [] */0
+                                  ]),
+                              /* currentInput */"",
+                              /* inputRef */state[/* inputRef */2]
+                            ]]);
+                }
               }
+              break;
           
         }
       }

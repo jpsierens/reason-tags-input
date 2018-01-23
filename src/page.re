@@ -37,11 +37,16 @@ let make = _children => {
     switch action {
     | Change(text) => ReasonReact.Update({...state, currentInput: text})
     | KeyPress(13) =>
-      ReasonReact.Update({
-        ...state,
-        tags: List.append(state.tags, [state.currentInput]),
-        currentInput: ""
-      })
+      let exists = List.exists(t => t === state.currentInput, state.tags);
+      if (! exists) {
+        ReasonReact.Update({
+          ...state,
+          tags: List.append(state.tags, [state.currentInput]),
+          currentInput: ""
+        });
+      } else {
+        ReasonReact.NoUpdate;
+      };
     | KeyPress(_) => ReasonReact.NoUpdate
     | RemoveTagClick(tag) =>
       ReasonReact.Update({
@@ -53,6 +58,8 @@ let make = _children => {
       | None => ReasonReact.NoUpdate
       | Some(r) =>
         ReasonReact.SideEffects(ReactDOMRe.domElementToObj(r)##focus())
+        |> ignore;
+        ReasonReact.NoUpdate;
       }
     },
   render: ({reduce, state, handle}) =>
