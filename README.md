@@ -1,5 +1,7 @@
 # app
 
+This project is made in reasonml.
+
 Run this project:
 
 ```
