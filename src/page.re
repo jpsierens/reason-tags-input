@@ -7,7 +7,8 @@ type action =
 type state = {
   tags: list(string),
   currentInput: string,
-  inputRef: ref(option(Dom.element))
+  inputRef: ref(option(Dom.element)),
+  duplicateTag: string
 };
 
 let str = ReasonReact.stringToElement;
@@ -31,11 +32,17 @@ let keypress = event => KeyPress(ReactEventRe.Keyboard.which(event));
    default component with whatever you pass after ...component  */
 let make = _children => {
   ...component,
-  initialState: () => {tags: [], currentInput: "", inputRef: ref(None)},
+  initialState: () => {
+    tags: [],
+    currentInput: "",
+    inputRef: ref(None),
+    duplicateTag: ""
+  },
   /* pattern matching on the possible actions  */
   reducer: (action, state) =>
     switch action {
-    | Change(text) => ReasonReact.Update({...state, currentInput: text})
+    | Change(text) =>
+      ReasonReact.Update({...state, currentInput: text, duplicateTag: ""})
     | KeyPress(13) =>
       let exists = List.exists(t => t === state.currentInput, state.tags);
       if (! exists) {
@@ -45,7 +52,8 @@ let make = _children => {
           currentInput: ""
         });
       } else {
-        ReasonReact.NoUpdate;
+        let duplicate = List.find(t => t === state.currentInput, state.tags);
+        ReasonReact.Update({...state, duplicateTag: duplicate});
       };
     | KeyPress(_) => ReasonReact.NoUpdate
     | RemoveTagClick(tag) =>
@@ -68,7 +76,11 @@ let make = _children => {
         (
           List.map(
             tag =>
-              <span key=tag className="tag">
+              <span
+                key=tag
+                className=(
+                  "tag " ++ (state.duplicateTag === tag ? "duplicate" : "")
+                )>
                 (str(tag))
                 <span
                   className="remove-tag"

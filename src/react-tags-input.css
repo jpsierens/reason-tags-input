@@ -22,6 +22,10 @@
 	cursor: pointer;
 }
 
+.react-tags-input .tag.duplicate {
+	background: #ff8181;
+}
+
 .react-tags-input .remove-tag {
 	font-size: 8px;
   padding-left: 5px;

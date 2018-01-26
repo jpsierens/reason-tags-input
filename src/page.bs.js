@@ -38,9 +38,12 @@ function make() {
                               return /* FocusClick */0;
                             }))
                     }, $$Array.of_list(List.map((function (tag) {
+                                var match = +(state[/* duplicateTag */3] === tag);
                                 return React.createElement("span", {
                                             key: tag,
-                                            className: "tag"
+                                            className: "tag " + (
+                                              match !== 0 ? "duplicate" : ""
+                                            )
                                           }, tag, React.createElement("span", {
                                                 className: "remove-tag",
                                                 onClick: Curry._1(reduce, (function () {
@@ -59,7 +62,8 @@ function make() {
       return /* record */[
               /* tags : [] */0,
               /* currentInput */"",
-              /* inputRef */[/* None */0]
+              /* inputRef */[/* None */0],
+              /* duplicateTag */""
             ];
     });
   newrecord[/* reducer */12] = (function (action, state) {
@@ -77,7 +81,8 @@ function make() {
               return /* Update */Block.__(0, [/* record */[
                           /* tags */state[/* tags */0],
                           /* currentInput */action[0],
-                          /* inputRef */state[/* inputRef */2]
+                          /* inputRef */state[/* inputRef */2],
+                          /* duplicateTag */""
                         ]]);
           case 1 : 
               var tag = action[0];
@@ -86,7 +91,8 @@ function make() {
                                     return +(t !== tag);
                                   }))(state[/* tags */0]),
                           /* currentInput */state[/* currentInput */1],
-                          /* inputRef */state[/* inputRef */2]
+                          /* inputRef */state[/* inputRef */2],
+                          /* duplicateTag */state[/* duplicateTag */3]
                         ]]);
           case 2 : 
               if (action[0] !== 13) {
@@ -96,7 +102,15 @@ function make() {
                         return +(t === state[/* currentInput */1]);
                       }), state[/* tags */0]);
                 if (exists) {
-                  return /* NoUpdate */0;
+                  var duplicate = List.find((function (t) {
+                          return +(t === state[/* currentInput */1]);
+                        }), state[/* tags */0]);
+                  return /* Update */Block.__(0, [/* record */[
+                              /* tags */state[/* tags */0],
+                              /* currentInput */state[/* currentInput */1],
+                              /* inputRef */state[/* inputRef */2],
+                              /* duplicateTag */duplicate
+                            ]]);
                 } else {
                   return /* Update */Block.__(0, [/* record */[
                               /* tags */List.append(state[/* tags */0], /* :: */[
@@ -104,7 +118,8 @@ function make() {
                                     /* [] */0
                                   ]),
                               /* currentInput */"",
-                              /* inputRef */state[/* inputRef */2]
+                              /* inputRef */state[/* inputRef */2],
+                              /* duplicateTag */state[/* duplicateTag */3]
                             ]]);
                 }
               }
