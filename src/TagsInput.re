@@ -13,7 +13,7 @@ type state = {
 
 let str = ReasonReact.stringToElement;
 
-let component = ReasonReact.reducerComponent("Page");
+let component = ReasonReact.reducerComponent("TagsInput");
 
 /* Check this link on refs to understand why we do This
    https://reasonml.github.io/reason-react/docs/en/react-ref.html */
@@ -71,35 +71,35 @@ let make = _children => {
       }
     },
   render: ({reduce, state, handle}) =>
-    <section>
-      <div className="react-tags-input" onClick=(reduce((_) => FocusClick))>
-        (
-          List.map(
-            tag =>
+    <div className="react-tags-input" onClick=(reduce((_) => FocusClick))>
+      (
+        List.map(
+          tag =>
+            <span
+              key=tag
+              className=(
+                "tag " ++ (state.duplicateTag === tag ? "duplicate" : "")
+              )>
+              (str(tag))
               <span
-                key=tag
-                className=(
-                  "tag " ++ (state.duplicateTag === tag ? "duplicate" : "")
-                )>
-                (str(tag))
-                <span
-                  className="remove-tag"
-                  onClick=(reduce((_) => RemoveTagClick(tag)))>
-                  (str("X"))
-                </span>
-              </span>,
-            state.tags
-          )
-          |> Array.of_list
-          |> ReasonReact.arrayToElement
+                className="remove-tag"
+                onClick=(reduce((_) => RemoveTagClick(tag)))>
+                (str("X"))
+              </span>
+            </span>,
+          state.tags
         )
-        <input
-          _type="text"
-          ref=(handle(setInputRef))
-          value=state.currentInput
-          onKeyPress=(reduce(keypress))
-          onChange=(reduce(change))
-        />
-      </div>
-    </section>
+        |> Array.of_list
+        |> ReasonReact.arrayToElement
+      )
+      <input
+        _type="text"
+        ref=(handle(setInputRef))
+        value=state.currentInput
+        onKeyPress=(reduce(keypress))
+        onChange=(reduce(change))
+      />
+    </div>
 };
+
+let default = ReasonReact.wrapReasonForJs(~component, (_) => make());

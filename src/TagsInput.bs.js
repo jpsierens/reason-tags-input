@@ -12,7 +12,7 @@ function str(prim) {
   return prim;
 }
 
-var component = ReasonReact.reducerComponent("Page");
+var component = ReasonReact.reducerComponent("TagsInput");
 
 function setInputRef(r, param) {
   param[/* state */2][/* inputRef */2][0] = (r == null) ? /* None */0 : [r];
@@ -32,31 +32,31 @@ function make() {
   newrecord[/* render */9] = (function (param) {
       var state = param[/* state */2];
       var reduce = param[/* reduce */1];
-      return React.createElement("section", undefined, React.createElement("div", {
-                      className: "react-tags-input",
-                      onClick: Curry._1(reduce, (function () {
-                              return /* FocusClick */0;
-                            }))
-                    }, $$Array.of_list(List.map((function (tag) {
-                                var match = +(state[/* duplicateTag */3] === tag);
-                                return React.createElement("span", {
-                                            key: tag,
-                                            className: "tag " + (
-                                              match !== 0 ? "duplicate" : ""
-                                            )
-                                          }, tag, React.createElement("span", {
-                                                className: "remove-tag",
-                                                onClick: Curry._1(reduce, (function () {
-                                                        return /* RemoveTagClick */Block.__(1, [tag]);
-                                                      }))
-                                              }, "X"));
-                              }), state[/* tags */0])), React.createElement("input", {
-                          ref: Curry._1(param[/* handle */0], setInputRef),
-                          type: "text",
-                          value: state[/* currentInput */1],
-                          onKeyPress: Curry._1(reduce, keypress),
-                          onChange: Curry._1(reduce, change)
-                        })));
+      return React.createElement("div", {
+                  className: "react-tags-input",
+                  onClick: Curry._1(reduce, (function () {
+                          return /* FocusClick */0;
+                        }))
+                }, $$Array.of_list(List.map((function (tag) {
+                            var match = +(state[/* duplicateTag */3] === tag);
+                            return React.createElement("span", {
+                                        key: tag,
+                                        className: "tag " + (
+                                          match !== 0 ? "duplicate" : ""
+                                        )
+                                      }, tag, React.createElement("span", {
+                                            className: "remove-tag",
+                                            onClick: Curry._1(reduce, (function () {
+                                                    return /* RemoveTagClick */Block.__(1, [tag]);
+                                                  }))
+                                          }, "X"));
+                          }), state[/* tags */0])), React.createElement("input", {
+                      ref: Curry._1(param[/* handle */0], setInputRef),
+                      type: "text",
+                      value: state[/* currentInput */1],
+                      onKeyPress: Curry._1(reduce, keypress),
+                      onChange: Curry._1(reduce, change)
+                    }));
     });
   newrecord[/* initialState */10] = (function () {
       return /* record */[
@@ -131,10 +131,17 @@ function make() {
   return newrecord;
 }
 
+var $$default = ReasonReact.wrapReasonForJs(component, (function () {
+        return make(/* () */0);
+      }));
+
 exports.str         = str;
 exports.component   = component;
 exports.setInputRef = setInputRef;
 exports.change      = change;
 exports.keypress    = keypress;
 exports.make        = make;
+exports.$$default   = $$default;
+exports.default     = $$default;
+exports.__esModule  = true;
 /* component Not a pure module */
