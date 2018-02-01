@@ -3335,7 +3335,7 @@ function keypress($$event) {
   return /* KeyPress */Block.__(2, [$$event.which]);
 }
 
-function make() {
+function make(onTagInput, _) {
   var newrecord = component.slice();
   newrecord[/* render */9] = (function (param) {
       var state = param[/* state */2];
@@ -3420,6 +3420,7 @@ function make() {
                               /* duplicateTag */duplicate
                             ]]);
                 } else {
+                  Curry._1(onTagInput, state[/* currentInput */1]);
                   return /* Update */Block.__(0, [/* record */[
                               /* tags */List.append(state[/* tags */0], /* :: */[
                                     state[/* currentInput */1],
@@ -3439,8 +3440,8 @@ function make() {
   return newrecord;
 }
 
-var $$default = ReasonReact.wrapReasonForJs(component, (function () {
-        return make(/* () */0);
+var $$default = ReasonReact.wrapReasonForJs(component, (function (jsProps) {
+        return make(jsProps.onTagInput, /* array */[]);
       }));
 
 exports.str         = str;

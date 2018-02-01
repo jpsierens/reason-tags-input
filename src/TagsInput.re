@@ -30,7 +30,7 @@ let keypress = event => KeyPress(ReactEventRe.Keyboard.which(event));
 
 /* make is just a function that returns an object, which overrides the
    default component with whatever you pass after ...component  */
-let make = _children => {
+let make = (~onTagInput, _children) => {
   ...component,
   initialState: () => {
     tags: [],
@@ -46,6 +46,7 @@ let make = _children => {
     | KeyPress(13) =>
       let exists = List.exists(t => t === state.currentInput, state.tags);
       if (! exists) {
+        onTagInput(state.currentInput);
         ReasonReact.Update({
           ...state,
           tags: List.append(state.tags, [state.currentInput]),
@@ -102,4 +103,7 @@ let make = _children => {
     </div>
 };
 
-let default = ReasonReact.wrapReasonForJs(~component, (_) => make());
+let default =
+  ReasonReact.wrapReasonForJs(~component, jsProps =>
+    make(~onTagInput=jsProps##onTagInput, [||])
+  );
