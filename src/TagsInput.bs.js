@@ -27,7 +27,7 @@ function keypress($$event) {
   return /* KeyPress */Block.__(2, [$$event.which]);
 }
 
-function make(onTagInput, _) {
+function make(onTagInput, onTagRemove, _) {
   var newrecord = component.slice();
   newrecord[/* render */9] = (function (param) {
       var state = param[/* state */2];
@@ -86,6 +86,7 @@ function make(onTagInput, _) {
                         ]]);
           case 1 : 
               var tag = action[0];
+              Curry._1(onTagRemove, tag);
               return /* Update */Block.__(0, [/* record */[
                           /* tags */List.filter((function (t) {
                                     return +(t !== tag);
@@ -133,7 +134,7 @@ function make(onTagInput, _) {
 }
 
 var $$default = ReasonReact.wrapReasonForJs(component, (function (jsProps) {
-        return make(jsProps.onTagInput, /* array */[]);
+        return make(jsProps.onTagInput, jsProps.onTagRemove, /* array */[]);
       }));
 
 exports.str         = str;

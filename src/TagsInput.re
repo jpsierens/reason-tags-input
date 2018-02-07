@@ -30,7 +30,7 @@ let keypress = event => KeyPress(ReactEventRe.Keyboard.which(event));
 
 /* make is just a function that returns an object, which overrides the
    default component with whatever you pass after ...component  */
-let make = (~onTagInput, _children) => {
+let make = (~onTagInput, ~onTagRemove, _children) => {
   ...component,
   initialState: () => {
     tags: [],
@@ -58,10 +58,11 @@ let make = (~onTagInput, _children) => {
       };
     | KeyPress(_) => ReasonReact.NoUpdate
     | RemoveTagClick(tag) =>
+      onTagRemove(tag);
       ReasonReact.Update({
         ...state,
         tags: List.filter(t => t !== tag, state.tags)
-      })
+      });
     | FocusClick =>
       switch state.inputRef^ {
       | None => ReasonReact.NoUpdate
@@ -105,5 +106,9 @@ let make = (~onTagInput, _children) => {
 
 let default =
   ReasonReact.wrapReasonForJs(~component, jsProps =>
-    make(~onTagInput=jsProps##onTagInput, [||])
+    make(
+      ~onTagInput=jsProps##onTagInput,
+      ~onTagRemove=jsProps##onTagRemove,
+      [||]
+    )
   );
