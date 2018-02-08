@@ -3335,36 +3335,37 @@ function keypress($$event) {
   return /* KeyPress */Block.__(2, [$$event.which]);
 }
 
-function make(onTagInput, onTagRemove, _) {
+function make(onTagInput, onTagRemove, $staropt$star, _) {
+  var enableClearAll = $staropt$star ? $staropt$star[0] : /* false */0;
   var newrecord = component.slice();
   newrecord[/* render */9] = (function (param) {
       var state = param[/* state */2];
       var reduce = param[/* reduce */1];
-      return React.createElement("div", {
-                  className: "react-tags-input",
-                  onClick: Curry._1(reduce, (function () {
-                          return /* FocusClick */0;
-                        }))
-                }, $$Array.of_list(List.map((function (tag) {
-                            var match = +(state[/* duplicateTag */3] === tag);
-                            return React.createElement("span", {
-                                        key: tag,
-                                        className: "tag " + (
-                                          match !== 0 ? "duplicate" : ""
-                                        )
-                                      }, tag, React.createElement("span", {
-                                            className: "remove-tag",
-                                            onClick: Curry._1(reduce, (function () {
-                                                    return /* RemoveTagClick */Block.__(1, [tag]);
-                                                  }))
-                                          }, "X"));
-                          }), state[/* tags */0])), React.createElement("input", {
-                      ref: Curry._1(param[/* handle */0], setInputRef),
-                      type: "text",
-                      value: state[/* currentInput */1],
-                      onKeyPress: Curry._1(reduce, keypress),
-                      onChange: Curry._1(reduce, change)
-                    }));
+      return React.createElement("div", undefined, React.createElement("div", {
+                      className: "react-tags-input",
+                      onClick: Curry._1(reduce, (function () {
+                              return /* FocusClick */0;
+                            }))
+                    }, $$Array.of_list(List.map((function (tag) {
+                                var match = +(state[/* duplicateTag */3] === tag);
+                                return React.createElement("span", {
+                                            key: tag,
+                                            className: "tag " + (
+                                              match !== 0 ? "duplicate" : ""
+                                            )
+                                          }, tag, React.createElement("span", {
+                                                className: "remove-tag",
+                                                onClick: Curry._1(reduce, (function () {
+                                                        return /* RemoveTagClick */Block.__(1, [tag]);
+                                                      }))
+                                              }, "X"));
+                              }), state[/* tags */0])), React.createElement("input", {
+                          ref: Curry._1(param[/* handle */0], setInputRef),
+                          type: "text",
+                          value: state[/* currentInput */1],
+                          onKeyPress: Curry._1(reduce, keypress),
+                          onChange: Curry._1(reduce, change)
+                        })), enableClearAll !== 0 ? React.createElement("span", undefined, "clear all") : "");
     });
   newrecord[/* initialState */10] = (function () {
       return /* record */[
@@ -3442,7 +3443,7 @@ function make(onTagInput, onTagRemove, _) {
 }
 
 var $$default = ReasonReact.wrapReasonForJs(component, (function (jsProps) {
-        return make(jsProps.onTagInput, jsProps.onTagRemove, /* array */[]);
+        return make(jsProps.onTagInput, jsProps.onTagRemove, /* Some */[jsProps.enableClearAll], /* array */[]);
       }));
 
 exports.str         = str;

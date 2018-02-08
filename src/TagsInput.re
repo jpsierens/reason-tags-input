@@ -30,7 +30,7 @@ let keypress = event => KeyPress(ReactEventRe.Keyboard.which(event));
 
 /* make is just a function that returns an object, which overrides the
    default component with whatever you pass after ...component  */
-let make = (~onTagInput, ~onTagRemove, _children) => {
+let make = (~onTagInput, ~onTagRemove, ~enableClearAll=false, _children) => {
   ...component,
   initialState: () => {
     tags: [],
@@ -73,34 +73,37 @@ let make = (~onTagInput, ~onTagRemove, _children) => {
       }
     },
   render: ({reduce, state, handle}) =>
-    <div className="react-tags-input" onClick=(reduce((_) => FocusClick))>
-      (
-        List.map(
-          tag =>
-            <span
-              key=tag
-              className=(
-                "tag " ++ (state.duplicateTag === tag ? "duplicate" : "")
-              )>
-              (str(tag))
+    <div>
+      <div className="react-tags-input" onClick=(reduce((_) => FocusClick))>
+        (
+          List.map(
+            tag =>
               <span
-                className="remove-tag"
-                onClick=(reduce((_) => RemoveTagClick(tag)))>
-                (str("X"))
-              </span>
-            </span>,
-          state.tags
+                key=tag
+                className=(
+                  "tag " ++ (state.duplicateTag === tag ? "duplicate" : "")
+                )>
+                (str(tag))
+                <span
+                  className="remove-tag"
+                  onClick=(reduce((_) => RemoveTagClick(tag)))>
+                  (str("X"))
+                </span>
+              </span>,
+            state.tags
+          )
+          |> Array.of_list
+          |> ReasonReact.arrayToElement
         )
-        |> Array.of_list
-        |> ReasonReact.arrayToElement
-      )
-      <input
-        _type="text"
-        ref=(handle(setInputRef))
-        value=state.currentInput
-        onKeyPress=(reduce(keypress))
-        onChange=(reduce(change))
-      />
+        <input
+          _type="text"
+          ref=(handle(setInputRef))
+          value=state.currentInput
+          onKeyPress=(reduce(keypress))
+          onChange=(reduce(change))
+        />
+      </div>
+      (enableClearAll ? <span> (str("clear all")) </span> : str(""))
     </div>
 };
 
@@ -109,6 +112,7 @@ let default =
     make(
       ~onTagInput=jsProps##onTagInput,
       ~onTagRemove=jsProps##onTagRemove,
+      ~enableClearAll=jsProps##enableClearAll,
       [||]
     )
   );
