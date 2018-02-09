@@ -2,6 +2,7 @@ type action =
   | Change(string)
   | RemoveTagClick(string)
   | FocusClick
+  | ClearClick
   | KeyPress(int);
 
 type state = {
@@ -12,6 +13,8 @@ type state = {
 };
 
 let str = ReasonReact.stringToElement;
+
+let bool = Js.Boolean.to_js_boolean;
 
 let component = ReasonReact.reducerComponent("TagsInput");
 
@@ -28,9 +31,11 @@ let change = event =>
 
 let keypress = event => KeyPress(ReactEventRe.Keyboard.which(event));
 
+let clearClick = (_) => ClearClick;
+
 /* make is just a function that returns an object, which overrides the
    default component with whatever you pass after ...component  */
-let make = (~onTagInput, ~onTagRemove, ~enableClearAll=false, _children) => {
+let make = (~onTagInput, ~onTagRemove, ~enableClearAll, ~onClear, _children) => {
   ...component,
   initialState: () => {
     tags: [],
@@ -63,6 +68,9 @@ let make = (~onTagInput, ~onTagRemove, ~enableClearAll=false, _children) => {
         ...state,
         tags: List.filter(t => t !== tag, state.tags)
       });
+    | ClearClick =>
+      onClear();
+      ReasonReact.Update({...state, tags: []});
     | FocusClick =>
       switch state.inputRef^ {
       | None => ReasonReact.NoUpdate
@@ -73,8 +81,8 @@ let make = (~onTagInput, ~onTagRemove, ~enableClearAll=false, _children) => {
       }
     },
   render: ({reduce, state, handle}) =>
-    <div>
-      <div className="react-tags-input" onClick=(reduce((_) => FocusClick))>
+    <div className="react-tags-input">
+      <div className="input-wrapper" onClick=(reduce((_) => FocusClick))>
         (
           List.map(
             tag =>
@@ -103,7 +111,13 @@ let make = (~onTagInput, ~onTagRemove, ~enableClearAll=false, _children) => {
           onChange=(reduce(change))
         />
       </div>
-      (enableClearAll ? <span> (str("clear all")) </span> : str(""))
+      (
+        enableClearAll === bool(true) ?
+          <span className="clear-all" onClick=(reduce(clearClick))>
+            (str("clear all"))
+          </span> :
+          str("")
+      )
     </div>
 };
 
@@ -113,6 +127,7 @@ let default =
       ~onTagInput=jsProps##onTagInput,
       ~onTagRemove=jsProps##onTagRemove,
       ~enableClearAll=jsProps##enableClearAll,
+      ~onClear=jsProps##onClear,
       [||]
     )
   );

@@ -3314,6 +3314,7 @@ var $$Array     = __webpack_require__(20);
 var Block       = __webpack_require__(3);
 var Curry       = __webpack_require__(1);
 var React       = __webpack_require__(5);
+var Js_boolean  = __webpack_require__(24);
 var ReasonReact = __webpack_require__(22);
 
 function str(prim) {
@@ -3335,14 +3336,20 @@ function keypress($$event) {
   return /* KeyPress */Block.__(2, [$$event.which]);
 }
 
-function make(onTagInput, onTagRemove, $staropt$star, _) {
-  var enableClearAll = $staropt$star ? $staropt$star[0] : /* false */0;
+function clearClick() {
+  return /* ClearClick */1;
+}
+
+function make(onTagInput, onTagRemove, enableClearAll, onClear, _) {
   var newrecord = component.slice();
   newrecord[/* render */9] = (function (param) {
       var state = param[/* state */2];
       var reduce = param[/* reduce */1];
-      return React.createElement("div", undefined, React.createElement("div", {
-                      className: "react-tags-input",
+      var match = +(enableClearAll === Js_boolean.to_js_boolean(/* true */1));
+      return React.createElement("div", {
+                  className: "react-tags-input"
+                }, React.createElement("div", {
+                      className: "input-wrapper",
                       onClick: Curry._1(reduce, (function () {
                               return /* FocusClick */0;
                             }))
@@ -3365,7 +3372,10 @@ function make(onTagInput, onTagRemove, $staropt$star, _) {
                           value: state[/* currentInput */1],
                           onKeyPress: Curry._1(reduce, keypress),
                           onChange: Curry._1(reduce, change)
-                        })), enableClearAll !== 0 ? React.createElement("span", undefined, "clear all") : "");
+                        })), match !== 0 ? React.createElement("span", {
+                        className: "clear-all",
+                        onClick: Curry._1(reduce, clearClick)
+                      }, "clear all") : "");
     });
   newrecord[/* initialState */10] = (function () {
       return /* record */[
@@ -3377,12 +3387,22 @@ function make(onTagInput, onTagRemove, $staropt$star, _) {
     });
   newrecord[/* reducer */12] = (function (action, state) {
       if (typeof action === "number") {
-        var match = state[/* inputRef */2][0];
-        if (match) {
-          /* SideEffects */Block.__(2, [match[0].focus()]);
-          return /* NoUpdate */0;
+        if (action) {
+          Curry._1(onClear, /* () */0);
+          return /* Update */Block.__(0, [/* record */[
+                      /* tags : [] */0,
+                      /* currentInput */state[/* currentInput */1],
+                      /* inputRef */state[/* inputRef */2],
+                      /* duplicateTag */state[/* duplicateTag */3]
+                    ]]);
         } else {
-          return /* NoUpdate */0;
+          var match = state[/* inputRef */2][0];
+          if (match) {
+            /* SideEffects */Block.__(2, [match[0].focus()]);
+            return /* NoUpdate */0;
+          } else {
+            return /* NoUpdate */0;
+          }
         }
       } else {
         switch (action.tag | 0) {
@@ -3443,14 +3463,18 @@ function make(onTagInput, onTagRemove, $staropt$star, _) {
 }
 
 var $$default = ReasonReact.wrapReasonForJs(component, (function (jsProps) {
-        return make(jsProps.onTagInput, jsProps.onTagRemove, /* Some */[jsProps.enableClearAll], /* array */[]);
+        return make(jsProps.onTagInput, jsProps.onTagRemove, jsProps.enableClearAll, jsProps.onClear, /* array */[]);
       }));
 
+var bool = Js_boolean.to_js_boolean;
+
 exports.str         = str;
+exports.bool        = bool;
 exports.component   = component;
 exports.setInputRef = setInputRef;
 exports.change      = change;
 exports.keypress    = keypress;
+exports.clearClick  = clearClick;
 exports.make        = make;
 exports.$$default   = $$default;
 exports.default     = $$default;
@@ -8201,6 +8225,26 @@ exports.factory              = factory;
 exports.reactNoopUpdateQueue = reactNoopUpdateQueue;
 exports.createClass          = createClass;
 /*  Not a pure module */
+
+
+/***/ }),
+/* 24 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+
+function to_js_boolean(b) {
+  if (b) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+exports.to_js_boolean = to_js_boolean;
+/* No side effect */
 
 
 /***/ })
