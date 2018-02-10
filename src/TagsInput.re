@@ -35,7 +35,15 @@ let clearClick = (_) => ClearClick;
 
 /* make is just a function that returns an object, which overrides the
    default component with whatever you pass after ...component  */
-let make = (~onTagInput, ~onTagRemove, ~enableClearAll, ~onClear, _children) => {
+let make =
+    (
+      ~onTagInput,
+      ~onTagRemove,
+      ~enableClearAll,
+      ~onClear,
+      ~clearAllText: option(string)=?,
+      _children
+    ) => {
   ...component,
   initialState: () => {
     tags: [],
@@ -114,7 +122,12 @@ let make = (~onTagInput, ~onTagRemove, ~enableClearAll, ~onClear, _children) => 
       (
         enableClearAll === bool(true) ?
           <span className="clear-all" onClick=(reduce(clearClick))>
-            (str("clear all"))
+            (
+              switch clearAllText {
+              | None => str("Clear")
+              | Some(text) => str(text)
+              }
+            )
           </span> :
           str("")
       )
@@ -128,6 +141,7 @@ let default =
       ~onTagRemove=jsProps##onTagRemove,
       ~enableClearAll=jsProps##enableClearAll,
       ~onClear=jsProps##onClear,
+      ~clearAllText=?Js.Nullable.to_opt(jsProps##clearAllText),
       [||]
     )
   );
