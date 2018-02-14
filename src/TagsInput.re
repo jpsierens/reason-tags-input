@@ -102,9 +102,8 @@ let make =
                 (str(tag))
                 <span
                   className="remove-tag"
-                  onClick=(reduce((_) => RemoveTagClick(tag)))>
-                  (str("X"))
-                </span>
+                  onClick=(reduce((_) => RemoveTagClick(tag)))
+                />
               </span>,
             state.tags
           )
@@ -120,11 +119,11 @@ let make =
         />
       </div>
       (
-        enableClearAll === bool(true) ?
+        Js.to_bool(enableClearAll) ?
           <span className="clear-all" onClick=(reduce(clearClick))>
             (
               switch clearAllText {
-              | None => str("Clear")
+              | None => str("Clear all")
               | Some(text) => str(text)
               }
             )

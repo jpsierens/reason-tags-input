@@ -33,3 +33,7 @@
   padding-bottom: 5px;
   vertical-align: middle;
 }
+
+.react-tags-input .remove-tag:before {
+	content: "X";
+}

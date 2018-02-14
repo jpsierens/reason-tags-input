@@ -3346,7 +3346,7 @@ function make(onTagInput, onTagRemove, enableClearAll, onClear, clearAllText, _)
   newrecord[/* render */9] = (function (param) {
       var state = param[/* state */2];
       var reduce = param[/* reduce */1];
-      var match = +(enableClearAll === Js_boolean.to_js_boolean(/* true */1));
+      var match = +enableClearAll;
       return React.createElement("div", {
                   className: "react-tags-input"
                 }, React.createElement("div", {
@@ -3366,7 +3366,7 @@ function make(onTagInput, onTagRemove, enableClearAll, onClear, clearAllText, _)
                                                 onClick: Curry._1(reduce, (function () {
                                                         return /* RemoveTagClick */Block.__(1, [tag]);
                                                       }))
-                                              }, "X"));
+                                              }));
                               }), state[/* tags */0])), React.createElement("input", {
                           ref: Curry._1(param[/* handle */0], setInputRef),
                           type: "text",
@@ -3376,7 +3376,7 @@ function make(onTagInput, onTagRemove, enableClearAll, onClear, clearAllText, _)
                         })), match !== 0 ? React.createElement("span", {
                         className: "clear-all",
                         onClick: Curry._1(reduce, clearClick)
-                      }, clearAllText ? clearAllText[0] : "Clear") : "");
+                      }, clearAllText ? clearAllText[0] : "Clear all") : "");
     });
   newrecord[/* initialState */10] = (function () {
       return /* record */[
