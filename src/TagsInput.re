@@ -14,6 +14,7 @@ type state = {
 
 let str = ReasonReact.stringToElement;
 
+/* Js.to_bool converts from JS boolean to BS bool. Js.Boolean.to_js_boolean is the opposite. */
 let bool = Js.Boolean.to_js_boolean;
 
 let component = ReasonReact.reducerComponent("TagsInput");
@@ -39,8 +40,7 @@ let make =
     (
       ~onTagInput,
       ~onTagRemove,
-      ~enableClearAll,
-      ~onClear,
+      ~onClear: option(_)=?,
       ~clearAllText: option(string)=?,
       _children
     ) => {
@@ -77,7 +77,10 @@ let make =
         tags: List.filter(t => t !== tag, state.tags)
       });
     | ClearClick =>
-      onClear();
+      switch onClear {
+      | None => false |> ignore
+      | Some(clear) => clear()
+      };
       ReasonReact.Update({...state, tags: []});
     | FocusClick =>
       switch state.inputRef^ {
@@ -119,7 +122,9 @@ let make =
         />
       </div>
       (
-        Js.to_bool(enableClearAll) ?
+        switch onClear {
+        | None => str("")
+        | Some(_) =>
           <span className="clear-all" onClick=(reduce(clearClick))>
             (
               switch clearAllText {
@@ -127,8 +132,8 @@ let make =
               | Some(text) => str(text)
               }
             )
-          </span> :
-          str("")
+          </span>
+        }
       )
     </div>
 };
@@ -138,8 +143,7 @@ let default =
     make(
       ~onTagInput=jsProps##onTagInput,
       ~onTagRemove=jsProps##onTagRemove,
-      ~enableClearAll=jsProps##enableClearAll,
-      ~onClear=jsProps##onClear,
+      ~onClear=?Js.Nullable.to_opt(jsProps##onClear),
       ~clearAllText=?Js.Nullable.to_opt(jsProps##clearAllText),
       [||]
     )

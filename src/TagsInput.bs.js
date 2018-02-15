@@ -33,12 +33,11 @@ function clearClick() {
   return /* ClearClick */1;
 }
 
-function make(onTagInput, onTagRemove, enableClearAll, onClear, clearAllText, _) {
+function make(onTagInput, onTagRemove, onClear, clearAllText, _) {
   var newrecord = component.slice();
   newrecord[/* render */9] = (function (param) {
       var state = param[/* state */2];
       var reduce = param[/* reduce */1];
-      var match = +enableClearAll;
       return React.createElement("div", {
                   className: "react-tags-input"
                 }, React.createElement("div", {
@@ -65,7 +64,7 @@ function make(onTagInput, onTagRemove, enableClearAll, onClear, clearAllText, _)
                           value: state[/* currentInput */1],
                           onKeyPress: Curry._1(reduce, keypress),
                           onChange: Curry._1(reduce, change)
-                        })), match !== 0 ? React.createElement("span", {
+                        })), onClear ? React.createElement("span", {
                         className: "clear-all",
                         onClick: Curry._1(reduce, clearClick)
                       }, clearAllText ? clearAllText[0] : "Clear all") : "");
@@ -81,7 +80,9 @@ function make(onTagInput, onTagRemove, enableClearAll, onClear, clearAllText, _)
   newrecord[/* reducer */12] = (function (action, state) {
       if (typeof action === "number") {
         if (action) {
-          Curry._1(onClear, /* () */0);
+          if (onClear) {
+            Curry._1(onClear[0], /* () */0);
+          }
           return /* Update */Block.__(0, [/* record */[
                       /* tags : [] */0,
                       /* currentInput */state[/* currentInput */1],
@@ -156,7 +157,7 @@ function make(onTagInput, onTagRemove, enableClearAll, onClear, clearAllText, _)
 }
 
 var $$default = ReasonReact.wrapReasonForJs(component, (function (jsProps) {
-        return make(jsProps.onTagInput, jsProps.onTagRemove, jsProps.enableClearAll, jsProps.onClear, Js_primitive.null_undefined_to_opt(jsProps.clearAllText), /* array */[]);
+        return make(jsProps.onTagInput, jsProps.onTagRemove, Js_primitive.null_undefined_to_opt(jsProps.onClear), Js_primitive.null_undefined_to_opt(jsProps.clearAllText), /* array */[]);
       }));
 
 var bool = Js_boolean.to_js_boolean;
