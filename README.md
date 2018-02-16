@@ -39,8 +39,8 @@ class YourComponent extends Component {
     return (
       <div>
         <TagsInput
-					onTagInput={this.handleTagInput}
-					onTagRemove={this.handleTagRemove}
+	  onTagInput={this.handleTagInput}
+	  onTagRemove={this.handleTagRemove}
           onClear={this.handleTagsClear} />
       </div>
     );
