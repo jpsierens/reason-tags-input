@@ -1,4 +1,4 @@
-# react-tags-input
+# react-tags-input [![Build Status](https://travis-ci.org/jpsierens/react-tags-input.svg?branch=master)](https://travis-ci.org/jpsierens/react-tags-input) 
 
 > A React component for inputting tags in a user friendly way
 
