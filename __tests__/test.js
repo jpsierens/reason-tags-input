@@ -16,8 +16,18 @@ describe('<TagsInput />', () => {
 		const onInput = () => false;
 		const onRemove = () => false;
 		const tagsInput = mount(<TagsInput onInput={onInput} onRemove={onRemove} />);
+		tagsInput.setState(
+			{
+				reasonState: [
+					["testTag", ""],
+					...tagsInput.state().reasonState.slice(1)
+				],
+				reasonStateVersion: 1,
+				reasonStateVersionUsedToComputeSubelements: 1
+			}
+		);
 		console.log(tagsInput.state())
-		// tagsInput.setState({  })
+		console.log(tagsInput.find('.tag').length);
 	});
 
 	it('should render clear cta', () => {
