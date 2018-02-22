@@ -3347,7 +3347,7 @@ function make(onTagInput, onTagRemove, onClear, clearAllText, _) {
       var state = param[/* state */2];
       var reduce = param[/* reduce */1];
       return React.createElement("div", {
-                  className: "react-tags-input"
+                  className: "reason-tags-input"
                 }, React.createElement("div", {
                       className: "input-wrapper",
                       onClick: Curry._1(reduce, (function () {

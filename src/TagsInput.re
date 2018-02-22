@@ -92,7 +92,7 @@ let make =
       }
     },
   render: ({reduce, state, handle}) =>
-    <div className="react-tags-input">
+    <div className="reason-tags-input">
       <div className="input-wrapper" onClick=(reduce((_) => FocusClick))>
         (
           List.map(

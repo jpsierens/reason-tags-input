@@ -1,4 +1,4 @@
-# react-tags-input [![Build Status](https://travis-ci.org/jpsierens/react-tags-input.svg?branch=master)](https://travis-ci.org/jpsierens/react-tags-input) 
+# reason-tags-input [![Build Status](https://travis-ci.org/jpsierens/react-tags-input.svg?branch=master)](https://travis-ci.org/jpsierens/react-tags-input)
 
 > A React component for inputting tags in a user friendly way
 
@@ -6,15 +6,15 @@
 
 ## Install
 ```
-$ npm install --save react-tags-input
+$ npm install --save reason-tags-input
 ```
 
 ## Usage
 ```js
 // import the react component
-import TagsInput from 'react-tags-input';
+import TagsInput from 'reason-tags-input';
 // optionally, import the default styles.
-import 'react-tags-input/build/styles.css';
+import 'reason-tags-input/build/styles.css';
 
 class YourComponent extends Component {
   constructor(props) {
@@ -49,10 +49,10 @@ class YourComponent extends Component {
 ```
 
 Props:
-- ```onTagInput``` [Required] (callback) for when a tag is entered
-- ```onTagRemove``` [Required] (callback) for when a tag is removed
-- ```onClear``` [Optional] (callback) for when all tags are cleared
-- ```clearAllText``` [Optional] (string) use a different clear text than the default ("Clear all")
+- ```onTagInput``` (Required) (callback) for when a tag is entered
+- ```onTagRemove``` (Required) (callback) for when a tag is removed
+- ```onClear``` (Optional) (callback) for when all tags are cleared
+- ```clearAllText``` (Optional) (string) use a different clear text than the default ("Clear all")
 
 
 [Click Here](https://github.com/jpsierens/react-tags-input-example) for an example you can run and play around with.

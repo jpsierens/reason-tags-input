@@ -1,10 +1,10 @@
-.react-tags-input .input-wrapper {
+.reason-tags-input .input-wrapper {
 	border: 1px solid #d6d6d6;
 	padding: 5px;
 	text-align: left;
 }
 
-.react-tags-input input {
+.reason-tags-input input {
 	margin: 0;
   background: 0 0;
   border: none;
@@ -15,7 +15,7 @@
   outline: 0;
 }
 
-.react-tags-input .tag {
+.reason-tags-input .tag {
 	margin-right: 5px;
 	background: #d2d2d2;
 	padding: 3px 8px;
@@ -23,17 +23,17 @@
 	cursor: pointer;
 }
 
-.react-tags-input .tag.duplicate {
+.reason-tags-input .tag.duplicate {
 	background: #ff8181;
 }
 
-.react-tags-input .remove-tag {
+.reason-tags-input .remove-tag {
 	font-size: 8px;
   padding-left: 5px;
   padding-bottom: 5px;
   vertical-align: middle;
 }
 
-.react-tags-input .remove-tag:before {
+.reason-tags-input .remove-tag:before {
 	content: "X";
 }
