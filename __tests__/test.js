@@ -9,7 +9,7 @@ configure({ adapter: new Adapter() });
 
 describe('<TagsInput />', () => {
 	it('should render', () => {
-		expect(shallow(<TagsInput />).find('.react-tags-input').length).toBe(1);
+		expect(shallow(<TagsInput />).find('.reason-tags-input').length).toBe(1);
 	});
 
 	it('should create a tag when the user enters text', () => {
