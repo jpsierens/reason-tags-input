@@ -12,6 +12,8 @@ type state = {
   duplicateTag: string
 };
 
+exception NoProp(string);
+
 let str = ReasonReact.stringToElement;
 
 /* Js.to_bool converts from JS boolean to BS bool. Js.Boolean.to_js_boolean is the opposite. */
@@ -38,8 +40,8 @@ let clearClick = (_) => ClearClick;
    default component with whatever you pass after ...component  */
 let make =
     (
-      ~onTagInput,
-      ~onTagRemove,
+      ~onTagInput: option(_)=?,
+      ~onTagRemove: option(_)=?,
       ~onClear: option(_)=?,
       ~clearAllText: option(string)=?,
       _children
@@ -59,7 +61,11 @@ let make =
     | KeyPress(13) =>
       let exists = List.exists(t => t === state.currentInput, state.tags);
       if (! exists) {
-        onTagInput(state.currentInput);
+        switch onTagInput {
+        | None =>
+          raise(NoProp("You forgot to pass the onTagInput callback prop."))
+        | Some(cb) => cb(state.currentInput)
+        };
         ReasonReact.Update({
           ...state,
           tags: List.append(state.tags, [state.currentInput]),
@@ -71,7 +77,11 @@ let make =
       };
     | KeyPress(_) => ReasonReact.NoUpdate
     | RemoveTagClick(tag) =>
-      onTagRemove(tag);
+      switch onTagRemove {
+      | None =>
+        raise(NoProp("You forgot to pass the RemoveTagClick callback prop."))
+      | Some(cb) => cb(tag)
+      };
       ReasonReact.Update({
         ...state,
         tags: List.filter(t => t !== tag, state.tags)
@@ -141,8 +151,8 @@ let make =
 let default =
   ReasonReact.wrapReasonForJs(~component, jsProps =>
     make(
-      ~onTagInput=jsProps##onTagInput,
-      ~onTagRemove=jsProps##onTagRemove,
+      ~onTagInput=?Js.Nullable.to_opt(jsProps##onTagInput),
+      ~onTagRemove=?Js.Nullable.to_opt(jsProps##onTagRemove),
       ~onClear=?Js.Nullable.to_opt(jsProps##onClear),
       ~clearAllText=?Js.Nullable.to_opt(jsProps##clearAllText),
       [||]

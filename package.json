@@ -19,8 +19,8 @@
   "author": "Jean-Pierre Sierens",
   "license": "MIT",
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/jpsierens/reason-tags-input.git"
+    "type": "git",
+    "url": "https://github.com/jpsierens/reason-tags-input.git"
   },
   "dependencies": {
     "react": "^15.4.2",
